@@ -7,7 +7,7 @@ const LoginPage = (props) => {
 
     return(<div>
         <p>hello</p>
-            <Link to="/dinerdashboard" />
+            <Link to="/dinerdashboard" >asd< /Link>
     </div>);
 };
 
