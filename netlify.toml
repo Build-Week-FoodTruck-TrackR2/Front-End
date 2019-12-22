@@ -1,0 +1,4 @@
+[build]
+base = "food-truck/"
+publish = "food-truck/build/"
+command = "yarn build"
