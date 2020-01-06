@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const Container = styled.section`
 
@@ -27,7 +28,7 @@ const Container = styled.section`
 const MapInterface = (props) => {
 
     return (<Container>
-        <button>Show Favorites</button>
+        <button onClick={() => { console.log(props.state)}}>Show Favorites</button>
         <input 
         placeholder="filter type of food"></input>
 
@@ -45,4 +46,11 @@ const MapInterface = (props) => {
     </Container>);
 };
 
-export default MapInterface;
+const mapStateToProps = state => {
+
+    return ({
+        state: state
+    })
+}
+
+export default connect(mapStateToProps, {})(MapInterface);

@@ -1,11 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 
 const OperatorDashboard = (props) => {
 
-    return(<> </>);
+    return(<><p>hello</p>
+            <button onClick={() => { console.log(props.formData)}}>hi</button> </>);
 };
 
+const mapStateToProps = state => {
 
-export default OperatorDashboard; 
+    return {
+
+        formData : state
+    }
+} 
+
+export default connect(mapStateToProps, {})(OperatorDashboard); 
