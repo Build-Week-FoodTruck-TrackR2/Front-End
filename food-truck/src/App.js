@@ -9,6 +9,7 @@ import TruckPage from './components/truckpage/index';
 import SignupOperator from './components/signup/signupoperator';
 import DinerSignUp from './components/signup/signupdiner';
 
+
 const GlobalStyle = createGlobalStyle`
 
 `;
