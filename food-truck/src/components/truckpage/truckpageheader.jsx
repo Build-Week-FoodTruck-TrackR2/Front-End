@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import standInTruck from '../../images/delivery-truck-png-7.png';
-import { Typography, Divider, Box, Icon } from '@material-ui/core';
+import { Typography, Divider, Box, Icon, Button } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import  Rating from '@material-ui/lab/Rating';
+import Rating from '@material-ui/lab/Rating';
+import EditTruck from './editForms/edittruck';
 
 
 const Container = styled.section`
@@ -27,6 +28,11 @@ const Container = styled.section`
 
         width: 66%;
         margin-top: 5%;
+    }
+
+    .MuiButtonBase-root {
+
+        margin: 5% 0;
     }
 
     div {
@@ -55,10 +61,23 @@ const TruckPageHeader = (props) => {
 
     const [value, setValue] = useState(3);
     const [favorite, setFavorite] = useState(false);
+    const [open, setOpen] = useState(false);
+    
+    const handleClickOpen = () => { 
+        setOpen(true);
+    }
+
+    const handleClose = value => {
+        setOpen(false);
+        
+    }
 
     return(<Container>
+        
         <img src={standInTruck} alt="truck"></img>
         <Typography>Truck Name</Typography>
+        <Button onClick={handleClickOpen}>Edit Truck</Button>
+        <EditTruck open={open} onClose={handleClose} />
         <div>
             <Typography>Cuisine Type</Typography>
             <Typography>Location</Typography>

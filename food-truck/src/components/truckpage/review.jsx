@@ -1,15 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 import ReviewList from './reviewslist';
-import { Typography, AppBar, Toolbar, Divider } from '@material-ui/core';
+import AddReview from './editForms/addreview';
+import { Typography, AppBar, Toolbar, Divider, Button } from '@material-ui/core';
 
 const Container = styled.section`
 
+    .MuiButtonBase-root {
 
+        margin-left: 55%;
+    }
 `;
 
 
 const Review = (props) => {
+
+    const [open, setOpen] = React.useState(false);
+    
+    const handleClickOpen = () => { 
+        setOpen(true);
+    }
+
+    const handleClose = value => {
+        setOpen(false);
+        
+    }
 
     
 const testData = [{ user: "Lorem, ipsum.", 
@@ -54,6 +69,8 @@ rating: 5},
      <AppBar position="static">
          <Toolbar>
              <Typography>Reviews</Typography>
+             <Button onClick={handleClickOpen}>Add Review</Button>
+             <AddReview open={open} onClose={handleClose}/>
          </Toolbar>
      </AppBar>
      {testData.map( review => {

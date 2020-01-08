@@ -94,7 +94,7 @@ catagory: "pizza" },
            return (<>
                     <AppBar elevation="0" position="static" style={{width : '100vw', }}>
                         <Toolbar style={{margin: "0", display: "flex", justifyContent: "flex-start"}}>
-                            <Typography style={{marginBottom: "2%"}}>{catagory}</Typography>
+                            <Typography >{catagory}</Typography>
                         </Toolbar>
                     </AppBar>
                     <List>

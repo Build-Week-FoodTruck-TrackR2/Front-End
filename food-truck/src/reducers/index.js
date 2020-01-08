@@ -1,4 +1,4 @@
-import { ADD_OPERATOR, ADD_DINER } from "../actions";
+import { ADD_OPERATOR, ADD_DINER, LOGIN } from "../actions";
 
 
 const initialState = {
@@ -29,9 +29,14 @@ function reducer (state = initialState, action) {
                 currentUser: action.payload
             };
 
+        case LOGIN:
+
+            return({...state, 
+                currentUser: action.payload});
+
         default:
             
-                console.log(action);
+                console.log(action.payload);
                 return {lol: "lol"};
 
     }

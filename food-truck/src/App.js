@@ -1,7 +1,8 @@
 import React from 'react';
 import { Reset } from 'styled-reset';
 import { createGlobalStyle } from 'styled-components';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import DinerDashboard from './components/dinerdashboard/index';
 import OperatorDashboard from "./components/operatordashboard/index";
 import LoginPage from './components/loginpage/index';
@@ -14,19 +15,64 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
+const OperatorRoute = ({ component: Component, ...rest}) => (
+
+  <Route
+    {...rest}
+    render ={props => 
+    localStorage.getItem('role') === "Operator" ? (
+      <Component {...props} /> 
+    ) : (
+      <Redirect to="/" />
+    )
+    }
+    />
+);
+
+const DinerRoute = ({ component: Component, ...rest}) => (
+
+  <Route
+    {...rest}
+    render ={props => 
+    localStorage.getItem('role') === "Diner" ? (
+      <Component {...props} /> 
+    ) : (
+      <Redirect to="/" />
+    )
+    }
+    />
+);
+
+const TruckPageRoute = ({ component: Component, ...rest}) => (
+
+  <Route
+    {...rest}
+    render ={props => 
+    localStorage.getItem('role') ===  "Operator" ? (
+      <Component {...props} /> 
+    ) : (
+    localStorage.getItem('role') === "Diner") ? (
+      <Component {...props} /> 
+    ) : (
+      <Redirect to="/" />
+    )
+    }
+    />
+);
+
 function App() {
   return (
     <div className="App">
       <Reset />
       <GlobalStyle />
 
-      < Switch >
+      <Switch>
          <Route exact path="/" component={LoginPage} />
         <Route path="/dinerdashboard" component={DinerDashboard} />
-        <Route path="/operatordashboard" component={OperatorDashboard} />
-        <Route path="/truckpage" component={TruckPage} /> 
+        <OperatorRoute path="/operatordashboard" component={OperatorDashboard} />
+        <TruckPageRoute path="/truckpage" component={TruckPage} /> 
         <Route path ="/opsignup" component={SignupOperator} />
-        <Route path="/dinersignup" component={DinerSignUp} />
+        <DinerRoute path="/dinersignup" component={DinerSignUp} />
       </Switch>
           
     </div>

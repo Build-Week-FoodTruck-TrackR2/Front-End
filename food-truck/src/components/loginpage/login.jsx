@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Formik, Field, ErrorMessage, Form, useField } from 'formik';
 import { TextField, Button, AppBar, Typography, Toolbar, Radio, FormControlLabel} from '@material-ui/core';
-
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { login } from '../../actions';
 
 const MyRadio = ({label, ...props }) => {
 
@@ -49,6 +51,17 @@ const Container = styled.section`
 
 const Login = (props) => {
 
+    const handleLogin = () => {
+
+        console.log(props);
+        props.login();
+        props.state.currentUser.Role === "Operator" ? (
+            props.history.push("/operatordashboard") 
+            ):(
+            props.history.push("/dinerdashboard"))
+        console.log(props.state);
+    }
+
     return(<Container>
          <AppBar position="static" elevation="0">
                                 <Toolbar>
@@ -57,8 +70,8 @@ const Login = (props) => {
                             </AppBar>
        <Formik initialValues ={{}}
        onSubmit={ (data, { setSubmitting }) => {
-           console.log(data);
-       }} >
+                handleLogin();
+           }}>
        {({values, errors, isSubmitting}) =>( 
            <Form>
                <Field placeholder="username" atype="input" name="username" as={TextField} />
@@ -67,7 +80,7 @@ const Login = (props) => {
                     <Field label="operator" name="type" type="radio" value="operator" as={MyRadio} />
                     <Field label="diner" name="type" type="radio" value="diner" as={MyRadio} />
                </div>
-               <Button>Login</Button>
+               <Button type="submit">Login</Button>
                
            </Form>
        )} 
@@ -76,5 +89,11 @@ const Login = (props) => {
     </Container>);
 };
 
+const mapStateToProps = state => {
 
-export default Login; 
+    return {
+        state: state
+    };
+}
+
+export default connect(mapStateToProps, { login })(withRouter(Login)); 

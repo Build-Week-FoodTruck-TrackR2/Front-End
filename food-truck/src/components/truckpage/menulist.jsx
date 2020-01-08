@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import standInFood from '../../images/foodArt.jpg';
-import { Typography, Divider, Paper, ListItem } from '@material-ui/core';
-
+import { Typography, Divider, Paper, ListItem, Button } from '@material-ui/core';
+import EditMenuItem from './editForms/editmenuitem';
 
 
 const Container = styled.section`
@@ -61,6 +61,19 @@ const MenuList = (props) => {
             price: ""
     });
 
+    const [open, setOpen] = React.useState(false);
+    
+    const handleClickOpen = (e) => { 
+
+        e.stopPropagation();
+        setOpen(true);
+    }
+
+    const handleClose = value => {
+        setOpen(false);
+        
+    }
+
     const clickItem = (e) => {
 
         const dropdownList = document.getElementsByClassName("dropdown");
@@ -103,8 +116,8 @@ const MenuList = (props) => {
                     <Divider />
                     <Typography variant="caption">{item.name}</Typography>
                     <Typography>{item.price}</Typography>  
-                
-                    
+                    <Button  onClick={handleClickOpen}>Edit Food Item</Button>
+                    <EditMenuItem open={open} onClose={handleClose}/>
             </ ListItem>
            
           </Paper>
