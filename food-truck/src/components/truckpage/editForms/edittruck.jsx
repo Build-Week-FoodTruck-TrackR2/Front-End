@@ -4,6 +4,8 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { TextField, Button, AppBar, Toolbar, Dialog, DialogTitle, Box, Paper, Typography} from '@material-ui/core';
 import truckImage from '../../../images/delivery-truck-png-7.png';
 import * as yup from 'yup';
+import { editTruck } from '../../../actions';
+import { connect } from 'react-redux';
 
 const Container = styled.section`
 
@@ -94,6 +96,18 @@ const EditTruck = (props) => {
         })
     }
 
+    const handleSubmit = (data) => {
+
+        const formattedData = {
+            truckName: data.truckName,
+            location: {lat: data.latitude, long: data.longitude},
+            cuisineType: data.cuisineType,
+            id: window.location.pathname.split('/')[2]
+        }
+        props.editTruck(formattedData);
+
+    }
+
     return (
         <Dialog 
         onClose={handleClose} 
@@ -117,7 +131,10 @@ const EditTruck = (props) => {
 
                                 console.log(data);
 
+                                handleSubmit(data);
+                                localStorage.setItem('state', JSON.stringify(props.state));
                                 setSubmitting(false);
+                                handleClose();
                                 
                             }}
                             >
@@ -149,4 +166,10 @@ const EditTruck = (props) => {
     )
 }
 
-export default EditTruck;
+const mapStateToProps = state => {
+
+    return {
+        state: state
+    }
+}
+export default connect(mapStateToProps, { editTruck})(EditTruck);

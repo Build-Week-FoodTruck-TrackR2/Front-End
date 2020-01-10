@@ -117,7 +117,7 @@ const MenuList = (props) => {
                     <Typography variant="caption">{item.name}</Typography>
                     <Typography>{item.price}</Typography>  
                     <Button  onClick={handleClickOpen}>Edit Food Item</Button>
-                    <EditMenuItem open={open} onClose={handleClose}/>
+                    <EditMenuItem catagory={props.catagory} id={item.id} open={open} onClose={handleClose}/>
             </ ListItem>
            
           </Paper>

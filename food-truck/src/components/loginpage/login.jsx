@@ -55,7 +55,10 @@ const Login = (props) => {
 
         console.log(props);
         props.login();
-        props.state.currentUser.Role === "Operator" ? (
+        localStorage.setItem("role", JSON.stringify(props.state.currentUser.Role));
+        localStorage.setItem('state', JSON.stringify(props.state));
+
+        localStorage.getItem('role') === "Operator" ? (
             props.history.push("/operatordashboard") 
             ):(
             props.history.push("/dinerdashboard"))

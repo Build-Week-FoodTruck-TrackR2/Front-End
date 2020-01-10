@@ -4,7 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { TextField, Button, AppBar, Toolbar, Dialog, DialogTitle, Box, Paper, Typography} from '@material-ui/core';
 import truckImage from '../../../images/delivery-truck-png-7.png';
 import { connect } from 'react-redux';
-import { editMenuItem } from '../../../actions';
+import { addMenuItem } from '../../../actions';
 import * as yup from 'yup';
 
 const Container = styled.section`
@@ -69,7 +69,7 @@ const Container = styled.section`
 
 `;
 
-const EditMenuItem = (props) => {
+const AddMenuItem = (props) => {
 
     const { onClose, open } = props;
 
@@ -98,11 +98,11 @@ const EditMenuItem = (props) => {
 
     const handleSubmit = (data) => {
 
-        data.currentTruck = window.location.pathname.split('/')[2];
-        data.id = props.id;
-        data.currentCatagory = props.catagory;
+        
+        data.id = window.location.pathname.split('/')[2];
+        
         console.log(data);
-        props.editMenuItem(data);
+        props.addMenuItem(data);
     }
 
     return (
@@ -170,4 +170,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {editMenuItem})(EditMenuItem);
+export default connect(mapStateToProps, {addMenuItem})(AddMenuItem);
