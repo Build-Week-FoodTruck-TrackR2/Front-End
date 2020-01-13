@@ -1,80 +1,92 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import standInImage from '../../images/delivery-truck-png-7.png'
+import { Typography, Button, Divider } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 const Container = styled.li`
 
     display: flex;
-    border: 2px solid black;
-    
-    
-
+   
     img {
 
-        flex-basis: 33.3%;
+        flex-basis: 25%;
         max-width: 33%;
         max-height: 33%;
 
         
     }
 
-    
-        h2{
+    div {
 
-            font-weight: bold;
-            
-        }
-
-    div{
-
-        flex-basis:33.3%;
-        max-width: 10%;
+        flex-basis: 75%;
         display: flex;
         flex-flow: column;
-        padding: 3% 5% 3% 3% ;
+        
 
+        p {
 
-        p:nth-child(2) {
-
-            margin-top 40%;
+            padding: 2.5%;
         }
 
-        p:nth-child(3) {
+        .MuiDivider-root {
 
-            margin-top: 25%;
+            height: 1%;
+            width: 95%;
         }
     }
 
     #buttonDiv {
 
-        display: inline;
+        position: absolute;
+        
 
         button {
 
             float: right;
             position: relative;
-            top: 80%;
-            left: 275%;
+            top: 10vh;
+            left: 320%;
             width: 23vw;
 
+            span {
+
+                white-space: nowrap
+                
+            }
+
         }
+    }
+
+    .MuiDivider-root {
+
+        height: 1%;
+        width: 100vw;
     }
 
 `;
 
 const Truck = (props) => {
 
+
+
     return (<Container>
-        <img src={props.info.img}></img>
+        <img src={standInImage}></img>
 
         
         <div>
-            <h2>{props.info.name}</h2>
-            <p>{props.info.cusine}</p>
-            <p>{props.info.distance}</p>
+            <Typography noWrap={true}>{props.info.truckName}</Typography>
+            <Divider variant="middle"/>
+            <div>
+                <Typography>{`Serves: ${props.info.cuisineType}`}</Typography>
+                <Typography>{props.info.distance}</Typography>
+            </div>
         </div>
         <div id="buttonDiv">
-            <button > View Menu</button>
+            <Link  to={`/truckpage/${props.info.id}`}>
+            <Button>View Menu</Button>
+            </Link>
         </div>
+        
     </Container>);
 };
 
