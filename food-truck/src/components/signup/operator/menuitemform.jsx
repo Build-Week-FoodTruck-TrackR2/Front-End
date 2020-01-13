@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import foodPicture from '../../../images/foodArt.jpg';
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { TextField, Button, AppBar, Toolbar } from '@material-ui/core'
-import * as yup from 'yup'
+import * as yup from 'yup';
+import uuid from 'react-uuid';
 
 
 
@@ -158,30 +159,32 @@ const MenuItemForm = (props) => {
 
           console.log(data);
           
-          let itemsList = props.form.trucks[props.form.truckNumber].foodItems;
+          let catagorys = props.form.trucks[props.form.truckNumber].catagorys;
           let truckList = props.form.trucks;
 
           console.log(props.form);
           console.log(truckList);
         
-          itemsList.hasOwnProperty(data.catagory) ? 
+          catagorys.hasOwnProperty(data.catagory) ? 
 
-          (itemsList[data.catagory] = [...itemsList[data.catagory], {
-                                      itemName: data.itemName,
+          (catagorys[data.catagory] = [...catagorys[data.catagory], {
+                                      id: uuid(),
+                                      name: data.itemName,
                                       description: data.description,
                                       price: data.price,
                                       image: file.raw
                                       }]
           ) : (
           
-          itemsList[data.catagory] = [{
-                                      itemName: data.itemName,
+          catagorys[data.catagory] = [{
+                                      id: uuid(),
+                                      name: data.itemName,
                                       description: data.description,
                                       price: data.price,
                                       image: file.raw
           }])        
 
-          truckList[props.form.truckNumber].foodItems = itemsList;
+          truckList[props.form.truckNumber].catagorys = catagorys;
           
           props.submit({...props.form,
                        trucks: truckList})

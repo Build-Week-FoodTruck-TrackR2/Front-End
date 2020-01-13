@@ -6,8 +6,44 @@ import truckImage from "../../images/delivery-truck-png-7.png";
 import TruckCard from './truckcard';
 import DeleteTruck from './deletetruck';
 import CancelTwoTone from '@material-ui/icons/CancelTwoTone';
-import { update } from '../../actions';
+import EditUserInformation from './edituserinformation';
+import {signOut } from '../../actions';
 const Container = styled.section`
+
+    .MuiAppBar-root {
+
+        div {
+            display: flex;
+            justify-content: space-around;
+
+            * {
+                flex-basis: 100%;
+            }
+
+            button {
+
+                width: 100%;
+
+                .MuiButton-label {
+
+                    white-space: nowrap;
+                    display: block;
+                    font-size: 80%;
+
+                }
+            }
+
+            div {
+
+                display: flex;
+                justify-content: space-between;
+
+                *{
+                    flex-basis: 50%;
+                }
+            }
+        }
+    }
 
     div {
 
@@ -17,9 +53,13 @@ const Container = styled.section`
         flex-wrap: wrap;
 
         * {
-            flex-basis: 45%;
+            flex-basis: 50%;
         }
 
+        a {
+
+            text-decoration: none;
+        }
           
         .MuiSvgIcon-root {
 
@@ -34,9 +74,22 @@ const Container = styled.section`
 
 const OperatorDashboard = (props) => {
 
-    const [count, setCount] = React.useState(0);
+    // const [count, setCount] = React.useState(0);
     const [open, setOpen] = React.useState(false);
+    const [openEditMenu, setOpenEditMenu] = React.useState(false);
 
+    
+    const handleEditClickOpen = (e) => { 
+
+       
+        setOpenEditMenu(true);
+    }
+
+    const handleEditClose = value => {
+        setOpenEditMenu(false);
+        
+    }
+    
     const handleClickOpen = (e) => { 
 
        
@@ -47,20 +100,23 @@ const OperatorDashboard = (props) => {
         setOpen(false);
         
     }
-    
-    useEffect(() => {
-        props.update();
-        console.log(props.trucks);
-        if (count === 0)
-            setCount(1);
-        
-    },[count, open])
+
+    const handleSignOut = () => {
+
+        props.signOut();
+        localStorage.clear();
+    }
 
     return(
         <Container>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography>Operator Dashboard</Typography>
+                    <Typography noWrap={true}>Operator Dashboard</Typography>
+                    <div>
+                        <Button size="small" onClick={handleEditClickOpen}>Edit User Information</Button>
+                        <Button size="small" onClick={handleSignOut}>Sign Out</Button> 
+                        <EditUserInformation open={openEditMenu} onClose={handleEditClose} />
+                    </div>
                 </Toolbar>
             </AppBar>
             <div>
@@ -86,4 +142,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { update })(OperatorDashboard); 
+export default connect(mapStateToProps, { signOut })(OperatorDashboard); 

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import standInFood from '../../images/foodArt.jpg';
 import { Typography, Divider, Paper, ListItem, Button } from '@material-ui/core';
 import EditMenuItem from './editForms/editmenuitem';
+import { connect } from 'react-redux';
 
 
 const Container = styled.section`
@@ -36,7 +37,15 @@ const Container = styled.section`
                     min-width: 20vw;
                     min-height: 20vw;
 
-                }  
+                }
+                
+                button {
+
+                    span {
+
+                        font-size: 60%;
+                    }
+                }
 
                
 
@@ -67,6 +76,7 @@ const MenuList = (props) => {
 
         e.stopPropagation();
         setOpen(true);
+        setFocusedItem({});
     }
 
     const handleClose = value => {
@@ -81,9 +91,10 @@ const MenuList = (props) => {
             dropdown.style.display = "none";
         }   
 
-        console.log();
+        
 
         const parent = e.currentTarget.parentNode.parentNode;
+        console.log(parent.children);
 
         const item = props.items.filter( item => {
             return item.name === e.currentTarget.children[2].textContent 
@@ -95,8 +106,18 @@ const MenuList = (props) => {
         let indexOfNode = Array.prototype.indexOf.call(parent.childNodes, e.currentTarget.parentNode);
         let remainder = Math.floor(indexOfNode/3);
         let difference = indexOfNode - 3*remainder;
+
+        console.log(parent.children);
         
-        difference % 2 !== 0 ? parent.children[indexOfNode + 1].style.display = "block" :  parent.children[indexOfNode + 2].style.display = "block";
+        if(parent.children.length > 2)
+            if(indexOfNode === parent.children.length - 2 )
+                parent.children[indexOfNode + 1].style.display = "block";
+            else
+                difference % 2 !== 0 ? parent.children[indexOfNode + 1].style.display = "block" :  parent.children[indexOfNode + 2].style.display = "block";
+        else if(parent.children.length === 2)
+            parent.children[1].style.display = "block";
+
+
         
     }
     
@@ -116,7 +137,9 @@ const MenuList = (props) => {
                     <Divider />
                     <Typography variant="caption">{item.name}</Typography>
                     <Typography>{item.price}</Typography>  
-                    <Button  onClick={handleClickOpen}>Edit Food Item</Button>
+                    {props.currentUser.Role === 'Operator' && 
+                        <Button  size="small" onClick={handleClickOpen}>Edit Food Item</Button>
+                    }
                     <EditMenuItem catagory={props.catagory} id={item.id} open={open} onClose={handleClose}/>
             </ ListItem>
            
@@ -129,18 +152,32 @@ const MenuList = (props) => {
                 <Typography>{focusedItem.description}</Typography>
           </div> 
           
-          ) : null}
-          </>)})}
-          
-          
+          ) : (props.items.length === 1 ? (<div className="dropdown" style={{display: "none"}}>
+          <Typography>{focusedItem.name}</Typography>
+          <Typography>{focusedItem.price}</Typography>
+          <Divider />
+          <Typography>{focusedItem.description}</Typography>
+          </div> 
 
-          
-          
+          ) : (index === (props.items.length-1) ? (<div className="dropdown" style={{display: "none"}}>
+          <Typography>{focusedItem.name}</Typography>
+          <Typography>{focusedItem.price}</Typography>
+          <Divider />
+          <Typography>{focusedItem.description}</Typography>
+          </div>
+          ):(null)
+          ))}
 
-         
-       
-          
+          </>)})}      
     </Container>);
 }
 
-export default MenuList;
+const mapStateToProps = state => {
+
+    return {
+
+        currentUser: state.currentUser
+    }
+}
+
+export default connect(mapStateToProps, {})(MenuList);

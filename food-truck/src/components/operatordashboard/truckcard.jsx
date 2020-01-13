@@ -11,6 +11,7 @@ const Container = styled.section`
 .MuiPaper-root {
 
     width: 100%;
+    
 
     button {
         
@@ -36,6 +37,8 @@ const Container = styled.section`
 
         background: lightblue;
         margin: 0;
+
+     
     }
 
     #delete-button {

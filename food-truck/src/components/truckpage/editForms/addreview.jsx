@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { TextField, Button, AppBar, Toolbar, Dialog, DialogTitle, Box, Paper, Typography} from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import { connect } from 'react-redux';
+import { addReview } from '../../../actions';
 import * as yup from 'yup';
 
 const Container = styled.section`
@@ -53,6 +55,22 @@ const AddReview = (props) => {
         onClose();
     }
 
+    const handleSubmit = (data) => {
+
+        const formattedData = {
+            review: {
+                        reviwerName: props.currentUser.username, 
+                        date: Date.now(),
+                        review: data.review,
+                        rating: rating },
+            truckId: window.location.pathname.split('/')[2],
+
+
+        }
+
+        props.addReview(formattedData);
+    };
+
     return (
         <Dialog 
         onClose={handleClose} 
@@ -76,9 +94,11 @@ const AddReview = (props) => {
 
                                 setSubmitting(true);
 
-                                console.log(data);
+                                handleSubmit(data);
 
                                 setSubmitting(false);
+                                localStorage.setItem('state', JSON.stringify(props.state));
+                                handleClose();
                                 
                             }}
                             >
@@ -105,4 +125,13 @@ const AddReview = (props) => {
     )
 }
 
-export default AddReview;
+const mapStateToProps = state => {
+
+    return {
+
+        currentUser : state.currentUser,
+        state: state
+    }
+}
+
+export default connect(mapStateToProps, { addReview })(AddReview);

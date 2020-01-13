@@ -33,6 +33,9 @@ const Container = styled.section`
         div {
 
             margin 2.5% 0;
+            display: flex;
+            flex-flow: column;
+            
         }
     
     }

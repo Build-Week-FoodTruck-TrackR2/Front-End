@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Typography, Divider, List, AppBar, Toolbar, Button} from '@material-ui/core';
 import MenuList from './menulist';
 import { connect } from 'react-redux';
-import { update } from '../../actions';
 import AddMenuItem from './editForms/addmenuitem';
  
 
@@ -15,6 +14,28 @@ const Container = styled.section`
     justify-content: center;
     align-items: center;
     width: 100%;
+
+    header {
+
+        width: 100vw;
+
+        div {
+
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            * {
+
+                flex-basis: 50%;
+            }
+
+            button {
+
+                flex-basis: 50%;
+            }
+        }
+    }
 
     img {
 
@@ -53,16 +74,7 @@ const Container = styled.section`
 
 const MenuItems = (props) => {
 
-    const [count, setCount] = useState(0);
     const [open, setOpen] = React.useState(false);
-    
-    useEffect(() => {
-        props.update();
-        console.log(props);
-        if (count < 3)
-            setCount(count +1);
-        console.log(props);
-    },[count]);
 
     const handleClickOpen = (e) => { 
 
@@ -79,15 +91,19 @@ const MenuItems = (props) => {
     <Container>
 
         <AppBar elevation="0" position="static" style={{width : '100vw'}}>
-                        <Toolbar style={{margin: "0", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
-                            <Typography>Menu Items</Typography>
-                            <Button onClick={handleClickOpen}>Add Item</Button>
+                        <Toolbar>
+                            <Typography style={{flexBasis: "50%"}}>Menu Items</Typography>
+                            {props.state.currentUser.Role === 'Operator' && 
+                                <Button onClick={handleClickOpen} style={{flexBasis: "50%"}}>Add Item</Button> 
+                            }
                             <AddMenuItem open={open} onClose={handleClose}/>
                         </Toolbar>
         </AppBar>
-        <Divider style={{backgroundColor: "darkblue", margin: ".1%"}} />
+        <Divider variant="middle"/>
+        <Divider variant="middle"/>
         
-        {count === 3 && props.catagoryKeys.map( singleCatagory => {
+        
+        {props.catagoryKeys.map( singleCatagory => {
 
            return (<>
                     <AppBar elevation="0" position="static" style={{width : '100vw', }}>
@@ -113,20 +129,37 @@ const mapStateToProps = state => {
         let truck = false;
         let truckForMap = false;
         let catagoryKeys = [];
-    
-    if (state.currentUser.hasOwnProperty('trucks')) {
         const truckId = window.location.pathname.split('/')[2];
+
+    if(state.currentUser.Role === 'Operator'){
+        
+        if (state.currentUser.hasOwnProperty('trucks')) {
+        
         truck = state.currentUser.trucks.filter( truck => {
             return truck.id === truckId
         });
         console.log(truck);
-    }
+        }
 
-    if (truck !== false)  {
-        
-        truckForMap = truck[0];
-        catagoryKeys = Object.keys(truck[0].catagorys);
-        console.log(truck[0].catagorys);
+        if (truck !== false)  {
+            
+            truckForMap = truck[0];
+            catagoryKeys = Object.keys(truck[0].catagorys);
+            console.log(truck[0].catagorys);
+        }
+    }
+    else if (typeof(state.trucks) !== 'undefined'){
+
+        truck = state.trucks.filter( truck => {
+            return truck.id === truckId
+        });
+
+        if (truck !== false)  {
+            
+            truckForMap = truck[0];
+            catagoryKeys = Object.keys(truck[0].catagorys);
+            console.log(truck[0].catagorys);
+        }
     }
     
 
@@ -141,4 +174,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { update })(MenuItems);
+export default connect(mapStateToProps, {})(MenuItems);

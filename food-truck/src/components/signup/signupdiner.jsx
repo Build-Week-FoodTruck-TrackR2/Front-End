@@ -4,6 +4,7 @@ import { Paper, AppBar, Toolbar, Typography, Button, TextField } from '@material
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import { addDiner } from '../../actions';
+import uuid from 'react-uuid';
 
 const Container = styled.section`
 
@@ -81,6 +82,9 @@ const DinerSignUp = (props) => {
                     setSubmitting(true);
 
                     props.addDiner({
+                        id: uuid(),
+                        Role: 'Diner',
+                        favoriteTrucks: [],
                         firstName: data.firstName,
                         lastName: data.lastName,
                         username: data.username,

@@ -26,7 +26,7 @@ const Container = styled.section`
 
     #review-content {
 
-        margin: 3% 5%;
+        margin: 10% 5%;
     }
 
 
@@ -40,10 +40,10 @@ const ReviewList= (props) => {
         <div>
             <div>
                 <Avatar alt="avatar" src={standIn} />
-                <Typography variant="caption" noWrap={true} >{props.review.user}</Typography>
+                <Typography variant="caption" noWrap={true} >{props.review.reviwerName}</Typography>
             </div>
             <div>
-                <Typography variant="caption">{props.review.reviewDate}</Typography>
+                <Typography variant="caption">{props.review.date}</Typography>
                 <Box component="fieldset" mb={3} borderColor="transparent">
                     <Rating size="small" name="read-only" value={props.review.rating} readOnly />
                 </Box>
@@ -51,7 +51,7 @@ const ReviewList= (props) => {
             </div>
         </div>
         <Divider variant="middle"/>
-        <Typography id="review-content">{props.review.reviewContent}</Typography>
+        <Typography id="review-content">{props.review.review}</Typography>
     </Container>);
 }
 

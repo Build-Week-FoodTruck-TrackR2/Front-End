@@ -29,7 +29,7 @@ const DeleteTruck = (props) => {
     const handleDelete = () => {
 
         props.deleteTruck(props.id);
-        localStorage.setItem('state', JSON.stringify(props.state));
+        
         handleClose();
     }
 
@@ -55,6 +55,8 @@ const DeleteTruck = (props) => {
 }
 
 const mapStateToProps = state => {
+
+    console.log(state);
 
     return {
         state: state

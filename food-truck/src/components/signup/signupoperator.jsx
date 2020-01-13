@@ -7,7 +7,8 @@ import MenuItemForm from './operator/menuitemform';
 import AddTruck from './operator/addtruck';
 import AddMenu from './operator/addmenu';
 import { connect } from 'react-redux';
-import { addOperator } from '../../actions'
+import { addOperator } from '../../actions';
+import uuid from 'react-uuid';
 
 const Container = styled.section`
 
@@ -19,13 +20,13 @@ const Container = styled.section`
     .MuiPaper-elevation1 {
 
         width: 90%;
-        height: 90vh;
+        min-height: 90vh;
         margin-top: 5vh;
 
         #footer {
 
             position: absolute;
-            bottom: 5%;
+            bottom: 0%;
             width: 90vw;
         }
     }
@@ -67,6 +68,8 @@ const SignupOperator = (props) => {
     const submit = () => {
 
         const formattedForm = { 
+            Role: 'Operator',
+            id: uuid(),
             firstName: formValues.firstName,
             lastName: formValues.lastName,
             username: formValues.username,
@@ -77,6 +80,8 @@ const SignupOperator = (props) => {
         };
 
         props.addOperator(formattedForm);
+
+        props.history.push('/operatordashboard');
     }
 
     
@@ -92,7 +97,7 @@ const SignupOperator = (props) => {
                                 </Toolbar>
                             </AppBar>
                             <InitialForm step={nextStep} submit={setFormValues} form={formValues}/>
-                            <AppBar id="footer" position="static" elevation="0" ><Toolbar></Toolbar></AppBar>
+                            <AppBar  id="footer" position="static" elevation="0" ><Toolbar></Toolbar></AppBar>
                         </Paper>
                     </Container>
             );
@@ -121,7 +126,7 @@ const SignupOperator = (props) => {
                                 </Toolbar>
                             </AppBar>
                             <MenuItemForm step={nextStep} submit={setFormValues} form={formValues}/>
-                            <AppBar id="footer" position="static" elevation="0" ><Toolbar></Toolbar></AppBar>
+                           
                         </Paper>
                 </Container>
             );

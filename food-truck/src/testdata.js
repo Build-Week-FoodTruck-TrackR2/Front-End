@@ -12,7 +12,7 @@ export const currentOperatorTest = [{
     trucks: [{
     id: uuid(),
     truckName: "wine truck",
-    location: {long: 41.234, lat: 2323},
+    location: {long: -73.944100, lat: 42.814220},
     cuisineType: "wine",
     image: "bob",
     catagorys: {
@@ -61,16 +61,24 @@ export const currentOperatorTest = [{
     }, 
     reviews: [{reviewerName: "wanda",
                review: "it was soooooooooooooooooooo good like wow",
-               date: Date.now()}, {reviewerName: "wanda",
+               date: Date.now(),
+               rating: 5},
+               {reviewerName: "wanda",
                review: "it was soooooooooooooooooooo good like wow",
-               date: Date.now()}, {reviewerName: "wanda",
+               date: Date.now(),
+               rating: 5}, 
+               {reviewerName: "wanda",
                review: "it was soooooooooooooooooooo good like wow",
-               date: Date.now()}, {reviewerName: "wanda",
+               date: Date.now(),
+               rating: 5}, 
+               {reviewerName: "wanda",
                review: "it was soooooooooooooooooooo good like wow",
-               date: Date.now()}]}, {
+               date: Date.now(),
+               rating: 5}]}, 
+    {
     id: uuid(),    
     truckName: "wine truck",
-    location: {long: 41.234, lat: 2323},
+    location: {long: -73.912740, lat: 42.813620},
     cuisineType: "wine",
     image: "bob",
     catagorys: {
@@ -128,7 +136,7 @@ export const currentOperatorTest = [{
                date: Date.now()}]}, {
     id: uuid(),    
     truckName: "wine truck",
-    location: {long: 41.234, lat: 2323},
+    location: {long: -73.928740, lat: 42.816974},
     cuisineType: "wine",
     image: "bob",
     catagorys: {
@@ -187,7 +195,7 @@ export const currentOperatorTest = [{
     
     id: uuid(),
     truckName: "wine truck",
-    location: {long: 41.234, lat: 2323},
+    location: {long: -73.952579, lat: 42.798636},
     cuisineType: "wine",
     image: "bob",
     catagorys: {
@@ -244,10 +252,11 @@ export const currentOperatorTest = [{
     date: Date.now()}]}]
 
 }, {Role: "Diner",
-    firstName: "Bob",
-    lastName: "sykes",
-    username: "bobsykes",
+    favoriteTrucks : [],
+    location: {lat: 42.800640, long: -73.967570},
+    firstName: "Maria",
+    lastName: "Maria",
+    username: "mariuh",
     id: uuid(),
-    bussinessName: "Wine Trucks",
-    email: "wine@trucks.com",
-    password: "youdontknow",}]
+    email: "maria@maria.com",
+    password: "mynameismaria",}]

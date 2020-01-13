@@ -6,14 +6,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { login } from '../../actions';
 
-const MyRadio = ({label, ...props }) => {
-
-    const [field] = useField(props);
-    
-    return (
-        <FormControlLabel {...field} control={<Radio />} label={label} />
-    );
-}
 
 const Container = styled.section`
 
@@ -51,18 +43,11 @@ const Container = styled.section`
 
 const Login = (props) => {
 
-    const handleLogin = () => {
+    const handleLogin = (data) => {
 
-        console.log(props);
-        props.login();
-        localStorage.setItem("role", JSON.stringify(props.state.currentUser.Role));
-        localStorage.setItem('state', JSON.stringify(props.state));
-
-        localStorage.getItem('role') === "Operator" ? (
-            props.history.push("/operatordashboard") 
-            ):(
-            props.history.push("/dinerdashboard"))
-        console.log(props.state);
+        props.login(data);
+        
+          
     }
 
     return(<Container>
@@ -73,16 +58,25 @@ const Login = (props) => {
                             </AppBar>
        <Formik initialValues ={{}}
        onSubmit={ (data, { setSubmitting }) => {
-                handleLogin();
-           }}>
+            
+            handleLogin(data);
+
+            console.log(props.state);
+
+            console.log(localStorage.getItem('state'));
+          
+
+            console.log(localStorage.getItem('state'));
+            if(localStorage.getItem('state').currentUser.hasOwnProperty('id')) {
+            localStorage.getItem('role') === "Operator" ? (
+            props.history.push("/operatordashboard") 
+            ):(
+            props.history.push("/dinerdashboard"))
+            }}}>
        {({values, errors, isSubmitting}) =>( 
            <Form>
                <Field placeholder="username" atype="input" name="username" as={TextField} />
                <Field placeholder="password" type="password" name="password" as={TextField}/>
-               <div>
-                    <Field label="operator" name="type" type="radio" value="operator" as={MyRadio} />
-                    <Field label="diner" name="type" type="radio" value="diner" as={MyRadio} />
-               </div>
                <Button type="submit">Login</Button>
                
            </Form>

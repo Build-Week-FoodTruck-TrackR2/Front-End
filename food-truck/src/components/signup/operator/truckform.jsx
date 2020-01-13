@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { TextField, Button, AppBar, Toolbar } from '@material-ui/core'
 import * as yup from 'yup'
 import truckImage from '../../../images/delivery-truck-png-7.png';
+import uuid from 'react-uuid';
 
 
 
@@ -147,11 +148,12 @@ const TruckForm = (props) => {
           props.submit({...props.form, 
                         trucks: [...props.form.trucks, {
                             truckName: data.truckName,
+                            id: uuid(),
                             longitude: data.longitude,
                             latitude: data.latitude,
                             cuisineType: data.cuisineType,
                             image: file.raw,
-                            foodItems: {},
+                            catagorys: {},
                         }]})
           setSubmitting(false);
           props.step(5);

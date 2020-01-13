@@ -1,5 +1,6 @@
-import { ADD_OPERATOR, ADD_DINER, LOGIN, REMEMBER_STATE_ON_REFRESH
-, EDIT_MENU_ITEM, EDIT_TRUCK, ADD_MENU_ITEM, DELETE_TRUCK } from "../actions";
+import { ADD_OPERATOR, ADD_DINER, OPERATOR_LOGIN, DINER_LOGIN, REMEMBER_STATE_ON_REFRESH
+, EDIT_MENU_ITEM, EDIT_TRUCK, ADD_MENU_ITEM, DELETE_TRUCK, SIGN_OUT, 
+ADD_REVIEW, CHANGE_FAVORITE, EDIT_OPERATOR_INFORMATION, EDIT_DINER_INFORMATION } from "../actions";
 import uuid from 'react-uuid';
 
 
@@ -14,6 +15,42 @@ function reducer (state = initialState, action) {
     console.log("here");
 
     switch(action.type) {
+
+        case EDIT_DINER_INFORMATION:
+
+            console.log('sup')
+            console.log(action.payload);
+
+            localStorage.setItem('state', JSON.stringify({...state,
+                currentUser: {...state.currentUser,
+                             firstName: action.payload.firstName,
+                             lastName: action.payload.lastName,
+                             email: action.payload.email,
+                             location: action.payload.location}}));
+            
+            return({...state,
+                    currentUser: {...state.currentUser,
+                                 firstName: action.payload.firstName,
+                                 lastName: action.payload.lastName,
+                                 email: action.payload.email,
+                                 location: action.payload.location}});
+
+        case EDIT_OPERATOR_INFORMATION:
+
+            localStorage.setItem('state', JSON.stringify({...state,
+                currentUser: {...state.currentUser,
+                             firstName: action.payload.firstName,
+                             lastName: action.payload.lastName,
+                             email: action.payload.email,
+                             businessName: action.payload.businessName}}));
+            
+            return({...state,
+                    currentUser: {...state.currentUser,
+                                 firstName: action.payload.firstName,
+                                 lastName: action.payload.lastName,
+                                 email: action.payload.email,
+                                 businessName: action.payload.businessName}});
+
 
         case EDIT_MENU_ITEM:
 
@@ -119,6 +156,12 @@ function reducer (state = initialState, action) {
 
             console.log(action.payload);
 
+            localStorage.setItem('state', JSON.stringify({
+                ...state,
+                currentUser: {...state.currentUser,
+                trucks: newTruckList}
+            }));
+
             return {
                 ...state,
                 currentUser: {...state.currentUser,
@@ -170,28 +213,100 @@ function reducer (state = initialState, action) {
         
         console.log(action.payload);
 
-            return action.payload;
+            return JSON.parse(localStorage.getItem('state'));
 
         case ADD_OPERATOR: 
 
             console.log("here");
 
-            return {...state,
-                currentUser: action.payload
-            };
+            localStorage.setItem('state', JSON.stringify({currentUser: action.payload}));
+            localStorage.setItem('role', JSON.stringify(action.payload.Role));
+
+            return {currentUser: action.payload}
         
         case ADD_DINER: 
 
             console.log("here");
 
-            return {...state,
-                currentUser: action.payload
-            };
+            localStorage.setItem('state', JSON.stringify(action.payload));
+            localStorage.setItem('role', JSON.stringify(action.payload.currentUser.Role));
 
-        case LOGIN:
+            return action.payload;
+
+        case ADD_REVIEW:
+
+            const truckReviewIndex = state.trucks.findIndex( truck =>{
+                return truck.id === action.payload.truckId
+            });
+
+            let reviewTrucks = state.trucks;
+            reviewTrucks[truckReviewIndex].reviews = [...reviewTrucks[truckReviewIndex].reviews,
+                                         action.payload.review];
+                  
+            localStorage.setItem('state', JSON.stringify({...state, 
+                                                        trucks: reviewTrucks}));
+
+            return {...state,
+                    trucks: reviewTrucks};
+        
+        case CHANGE_FAVORITE: {
+
+            console.log(action.payload);
+
+            if(action.payload.favorite){
+
+                console.log(action.payload);
+
+                let ls = JSON.parse(localStorage.getItem('state'));
+                ls.currentUser.favoriteTrucks = [...ls.currentUser.favoriteTrucks, action.payload.truckId]
+                localStorage.setItem('state', JSON.stringify(ls));
+
+                return {
+                    ...state,
+                    currentUser: {...state.currentUser,
+                                favoriteTrucks: [
+                                    ...state.currentUser.favoriteTrucks,
+                                    action.payload.truckId
+                                ]}
+                }
+            }
+            else{
+                
+               const favoriteTrucks = state.currentUser.favoriteTrucks.filter( truck => {
+                    return truck !== action.payload.truckId
+               });
+
+               
+               let ls = JSON.parse(localStorage.getItem('state'));
+               ls.currentUser.favoriteTrucks = favoriteTrucks;
+               localStorage.setItem('state', JSON.stringify(ls));
+
+               return {
+                ...state,
+                currentUser: {...state.currentUser,
+                            favoriteTrucks: favoriteTrucks}
+            }
+
+
+            }
+
+        }
+
+
+        case OPERATOR_LOGIN:
 
             return({...state, 
                 currentUser: action.payload});
+
+        case DINER_LOGIN:
+
+                console.log("DINER");
+
+                return action.payload;
+
+        case SIGN_OUT: 
+
+        return { }
 
         default:
             
