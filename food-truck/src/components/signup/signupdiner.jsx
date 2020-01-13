@@ -15,7 +15,7 @@ const Container = styled.section`
     .MuiPaper-elevation1 {
 
         width: 95vw;
-        height: 90vh;
+        min-height: 90vh;
         margin-top: 5vh;
 
         form {
@@ -131,7 +131,7 @@ const DinerSignUp = (props) => {
           
       )}
       </Formik>
-      <AppBar id="footer" position="static" elevation="0" ><Toolbar></Toolbar></AppBar>
+     
     </Paper>
     </Container>);
 };
