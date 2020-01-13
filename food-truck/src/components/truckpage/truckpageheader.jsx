@@ -91,7 +91,7 @@ const TruckPageHeader = (props) => {
                 return averageRating;
             }
             else
-                return value;
+                return 0;
 
     
         }
@@ -139,9 +139,12 @@ const TruckPageHeader = (props) => {
         </div>
         <Divider variant="middle" />
         <div>
-            {props.currentUser.Role === 'Diner' && !props.favorite? (<FavoriteBorderIcon onClick={clickFavorite} style={{ color: "red"}}></FavoriteBorderIcon>
-            ) : ( 
-            <FavoriteIcon onClick={clickFavorite} style={{ color: "red"}} ></FavoriteIcon>)}
+            { props.currentUser.Role === 'Diner' &&
+
+                (!props.favorite ? (<FavoriteBorderIcon onClick={clickFavorite} style={{ color: "red"}}></FavoriteBorderIcon>
+                ) : ( 
+                <FavoriteIcon onClick={clickFavorite} style={{ color: "red"}} ></FavoriteIcon>)) 
+            }
             
             <Box component="fieldset" mb={3} borderColor="transparent">
                 <Typography component="legend">Avg. Rating</Typography>

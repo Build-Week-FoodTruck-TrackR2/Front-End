@@ -22,7 +22,7 @@ const Container = styled.section`
         div {
 
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             width: 100%;
 
             * {
@@ -91,7 +91,7 @@ const MenuItems = (props) => {
     <Container>
 
         <AppBar elevation="0" position="static" style={{width : '100vw'}}>
-                        <Toolbar>
+                        <Toolbar  style={{width : '100vw', justifyContent: 'flex-start'}}> 
                             <Typography style={{flexBasis: "50%"}}>Menu Items</Typography>
                             {props.state.currentUser.Role === 'Operator' && 
                                 <Button onClick={handleClickOpen} style={{flexBasis: "50%"}}>Add Item</Button> 
